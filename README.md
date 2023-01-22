@@ -1,2 +1,2 @@
-# DroneCommandUsingAlexa
-Complete Project code
+# Drone Command and Control using Alexa
+
