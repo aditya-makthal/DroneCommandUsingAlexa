@@ -1,4 +1,9 @@
 
+# Drone Command and Control using Alexa
+
+The purpose of the project is to enable user to fly a drone in a remote area, while sitting at the comfort of your home.
+Using Alexa device you can invoke the skill and then command the drone to perform some operations for the user.
+
 ## Deployment
 
 To deploy this project
