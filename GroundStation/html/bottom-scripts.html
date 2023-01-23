@@ -1,0 +1,90 @@
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+<script>
+var ws=new WebSocket("wss://484rgfnxxi.execute-api.us-west-2.amazonaws.com/production");
+ws.onopen=()=>{
+	console.log("ws opened")
+	}
+ws.onmessage=function(data){
+	console.log("ws data recieved");
+	var movecommand=true;
+	console.log(data);
+	data=data.data;
+	//data=data.split(":")
+	//data=data[data.length-1]
+	//data=data.trim()
+	if(data.includes("WEST")){
+		data=data.replaceAll("WEST","")
+		data=parseInt(data)
+		data={north:0,east:-data};$.get("/goto",data).then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+	}
+	else if(data.includes("EAST")){
+		data=data.replaceAll("EAST","")
+		data=parseInt(data)
+		data={north:0,east:data};$.get("/goto",data).then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+	}
+	else if(data.includes("NORTH")){
+		data=data.replaceAll("NORTH","")
+		data=parseInt(data)
+		data={north:data,east:0};$.get("/goto",data).then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+	}
+	else if(data.includes("SOUTH")){
+		data=data.replaceAll("SOUTH","")
+		data=parseInt(data)
+		data={north:-data,east:0};$.get("/goto",data).then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+	}
+	else{
+		movecommand=false;
+		switch(data){
+			case "TAKEOFF":
+				console.log("TAKEOFF command");
+				$.get("/launch").then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+				break;
+			case "RTL":
+				console.log("RTL command");
+				$.get("/rtl").then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+				break;
+                        case "TAKEPHOTO":
+				console.log("TAKEPHOTO command");
+				$.get("/takephoto").then((resp)=>{
+					resp=JSON.stringify(resp)
+					var msg='{"action": "sendmessage", "message": "'+resp+'"}';
+					ws.send(msg)
+					});
+				break;
+			default:
+				console.log("unknown command")
+				break;
+			}
+		}
+		if(!movecommand){
+		
+					}
+		
+	}
+</script>

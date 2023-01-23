@@ -1,0 +1,7 @@
+local path: /home/pi/Desktop/drone_control
+Connecting to vehicle on: /dev/ttyUSB0,57600
+Server is bound on all addresses, port 8080
+You may connect to it using your web broser using a URL looking like this:
+http://localhost:8080/
+
+Waiting for cherrypy engine...
