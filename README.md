@@ -16,5 +16,7 @@ To deploy this project
 
 * The code for lambda is available as lambda.py
 
-* On the ground station run the html page.
+* On the ground station deploy the [GS Code](GroundStation/html/index.html) locally on the GS Machine.
+  
+* NOTE:Once check the connectivity strength between Drone and Ground Station. 
 
